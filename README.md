@@ -1,20 +1,53 @@
 # Skill Harness
 
-> 为每一个业务场景，创建不可跳步、不可简化的工程级 skill。
+> 不是写一个文件，是设计一条有人工把关的流水线。
 
-**Skill Harness 是一个工程约束型 skill 创建器。** 它不是给你一个模板让你填空，而是带你走一遍 PDCA 流程，确保产出的 skill 有流程管控、有知识库支撑、有质量校验。
+**Skill Harness 是一个 Skill 设计方法论框架。** 教你如何把一个复杂工作拆解成多个步骤，每步设人工检查点，经验自动沉淀到知识库。
 
 ## 这解决什么问题
 
 你用 AI Agent 做事时，是不是经常遇到：
 
-- AI 跳步，该做的调研没做就开始产出
+- AI 一口气做完，中间跳步出错
 - 产出太简略，拿到手不能用
-- 草稿直接上线，出了问题才发现
-- 做完不沉淀，下次又从零开始
-- skill 越来越多，越来越乱
+- 做完不沉淀，下次从零开始
+- 没有方法论，skill 设计全凭感觉
 
-Skill Harness 用 **PDCA 闭环 + 三层知识库 + 五大工程约束** 解决这些问题。
+Skill Harness 用 **PDC（多步拆解+人工检查）+ A（经验沉淀）** 解决这些问题。
+
+## 核心模型：PDC + A
+
+```
+P（规划）→ 把工作拆成步骤，定义每步的输入/产出/检查标准
+    ↓
+D（执行）→ 按步骤执行，每步产出具体结果
+    ↓
+C（检查）→ 每步结束，人工介入检查 ✅/❌，通过才进下一步
+    ↓
+A（沉淀）→ 收集经验（系统自动 + 人工反馈），写入知识库
+```
+
+**最核心的设计**：每步都有人工检查点。AI 跑得快但会出错，人在关键节点把关。
+
+### 示例：开发一个项目
+
+```
+步骤1：搜集资料（竞品调研 + 资料搜集）
+  → 产出：调研报告
+  → 人工检查 ✅/❌
+  → 通过才进入下一步
+
+步骤2：根据资料产出文档（需求文档、开发文档）
+  → 产出：文档
+  → 人工检查 ✅/❌
+  → 通过才进入下一步
+
+步骤3：执行编码
+  → 产出：代码
+  → 人工检查 ✅/❌
+
+A 阶段：收集经验（系统自动 + 人工反馈）→ 写入知识库
+```
 
 ## 与其他项目的区别
 
@@ -23,9 +56,9 @@ Skill Harness 用 **PDCA 闭环 + 三层知识库 + 五大工程约束** 解决�
 | [Anthropic skill-creator](https://github.com/anthropics/skills) | 怎么写 SKILL.md | 模板 + 指导 |
 | [nuwa-skill](https://github.com/alchaincyf/nuwa-skill)（女娲） | 蒸馏人的思维 | 6路采集 + 3重验证 |
 | [darwin-skill](https://github.com/alchaincyf/darwin-skill)（达尔文） | 让 skill 进化 | 自主实验循环 |
-| **Skill Harness** | **为业务场景创建工程化 skill** | **PDCA + 三层知识库 + 五大约束** |
+| **Skill Harness** | **如何设计多步骤+检查点的 skill** | **PDC拆解 + 人工检查点 + A经验沉淀** |
 
-**一句话：女娲蒸馏人，Skill Harness 装配业务。**
+**一句话：女娲蒸馏人，Skill Harness 设计流水线。**
 
 ## 安装
 
@@ -60,35 +93,26 @@ npx skills add nex627/skill-harness
 装好后，告诉 AI：
 
 ```
-> 帮我为抖音内容运营创建一个 skill
-> 为开发团队做一个 code review 的 skill
-> 我想给投资决策创建一个 skill
+> 帮我为开发项目设计一个 skill
+> 帮我做视频设计一个 skill
+> 为投资决策设计一个 skill
 ```
 
-AI 会启动 PDCA 流水线，带你走完四步：
+AI 会带你走设计流程：
+1. 理解场景（产出什么、有哪些环节、哪里容易出错）
+2. 拆步骤（3-7步，每步定义输入/动作/产出/检查标准）
+3. 定义检查点（每步人工检查清单）
+4. 设计经验沉淀（系统自动+人工反馈→知识库）
+5. 读取历史经验（避免重复踩坑）
+6. 产出完整 SKILL.md
 
-```
-P（计划）→ 读取历史经验 + 搜索行业对标 + 确定方案
-D（执行）→ 三段式结构化产出 skill 草稿
-C（检查）→ AI 自检评分 + 人工复核
-A（沉淀）→ 经验入库 + 版本号
-```
+## 五大设计约束
 
-## 三种 Skill 类型
-
-| 类型 | 适用场景 | 模板 |
-|------|---------|------|
-| **基础型** | 简单工具调用、格式转换 | `templates/basic-skill.md` |
-| **Workflow Harness 型** | 内容运营、开发编码、产品需求 | `templates/workflow-harness-skill.md` |
-| **知识库驱动型** | 投资、学习、关系决策 | `templates/knowledge-driven-skill.md` |
-
-## 五大工程约束
-
-1. **流程硬阻断** — PDCA 阶段强依赖，不通过不可进入下一步
-2. **三层知识库** — 公共库 + 行业库 + 私有库，不重复造轮子
-3. **禁止简略输出** — 必须分段结构化交付
-4. **人机双校验** — AI 自检 + 人工复核，草稿不可直接生效
-5. **版本可迭代** — 语义化版本号，可回溯可复用
+1. **多步拆解** — 工作必须拆成 3-7 个步骤，禁止一步到位
+2. **人工检查点** — 每步结束必须有人工检查，通过才进下一步
+3. **明确产出** — 每步必须有明确的产出物
+4. **经验沉淀** — 必须设计 A 阶段，收集系统+人工经验入知识库
+5. **历史复用** — 设计时必须读取历史经验，避免重复踩坑
 
 ## 项目结构
 
@@ -96,23 +120,23 @@ A（沉淀）→ 经验入库 + 版本号
 skill-harness/
 ├── README.md                          # 你在看的这个
 ├── LICENSE                            # MIT
-├── SKILL.md                           # Skill Harness 本体（元技能）
+├── SKILL.md                           # Skill Harness 本体（方法论框架）
 ├── spec.md                            # 完整规范文档
 ├── CONTRIBUTING.md                    # 贡献规则
 ├── templates/                         # Skill 模板
-│   ├── basic-skill.md                 # 基础型模板
-│   ├── workflow-harness-skill.md      # Workflow Harness 型模板
-│   └── knowledge-driven-skill.md      # 知识库驱动型模板
+│   ├── basic-skill.md                 # 基础型（3-7步+检查点+经验沉淀）
+│   ├── workflow-harness-skill.md      # Workflow 型（完整PDC+A+三层知识库）
+│   └── knowledge-driven-skill.md      # 知识库驱动型
 ├── examples/                          # 完整示例
-│   ├── content-ops/                   # 抖音内容运营示例
+│   ├── content-ops/                   # 视频制作示例（4步）
 │   │   ├── SKILL.md
 │   │   └── README.md
-│   └── dev-coding/                    # AI 辅助开发示例
+│   └── dev-coding/                    # 开发项目示例（3步）
 │       ├── SKILL.md
 │       └── README.md
 └── references/                        # 参考文档
     ├── skill-format.md                # Skill 格式规范
-    └── pdca-guide.md                  # PDCA 适配指南
+    └── pdca-guide.md                  # PDC+A 适配指南
 ```
 
 ## 兼容性
@@ -134,10 +158,6 @@ skill-harness/
 
 MIT — 随便用，随便改，随便造。
 
-## 关于作者
-
-**NEX** — 超级个体布道师，独立开发者。代表作：NEX 决策系统（AI 驱动的个人决策操作系统）、mgmt-skill（管理方法论蒸馏知识库）。
-
 ---
 
-> **Skill Harness** — 不是写一个文件，是装配一条流水线。
+> **Skill Harness** — 不是写一个文件，是设计一条有人工把关的流水线。

@@ -4,7 +4,6 @@ version: 1.0.0
 description: {一句话描述，≤300字}
 author: {your-name}
 tags: [{tag1}, {tag2}]
-skill_type: knowledge-driven
 knowledge_base: {path/to/knowledge-base.md}
 ---
 
@@ -22,7 +21,6 @@ knowledge_base: {path/to/knowledge-base.md}
 
 - {关键词1}
 - {关键词2}
-- {关键词3}
 
 **强制前置规则**：触发时必须先读取知识库文件，再输出任何建议。不读取就回答 = 质量不合格。
 
