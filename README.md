@@ -131,7 +131,10 @@ skill-harness/
 │   ├── content-ops/                   # 视频制作示例（4步）
 │   │   ├── SKILL.md
 │   │   └── README.md
-│   └── dev-coding/                    # 开发项目示例（3步）
+│   ├── dev-coding/                    # 开发项目示例（3步）
+│   │   ├── SKILL.md
+│   │   └── README.md
+│   └── conversation-closer/           # 对话收尾示例（通用C+A引擎模式）
 │       ├── SKILL.md
 │       └── README.md
 └── references/                        # 参考文档
